@@ -1,0 +1,40 @@
+main {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+section {
+  min-width: 300px;
+  max-width: 500px;
+  border: 2px solid;
+}
+
+h2 {
+  padding: 1%;
+}
+
+ul {
+  padding-inline-start: 0;
+}
+
+li.blog-entry {
+  display: flex;
+  justify-content: space-between;
+}
+
+li.blog-entry p {
+  padding: 1%;
+}
+
+p.title {
+  width: 60%;
+}
+
+p.date {
+  width: 40%;
+  color: gray;
+  text-align: right;
+}
