@@ -1,0 +1,15 @@
+extends main.pug 
+
+block title
+  title="Personal Blog - Home"
+
+block content
+    h1="Personal Blog"
+
+    ul
+    - for (let blogEntry of locals.blogEntries) {
+      li(class="blog-entry")
+        p(class="title")
+          a(href=`/article/${blogEntry.id}`)=`${blogEntry.title}`
+        p(class="date")=`${blogEntry.date}`
+    - }

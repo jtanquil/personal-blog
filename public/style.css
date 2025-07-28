@@ -1,23 +1,16 @@
 main {
   display: flex;
-  justify-content: center;
-  flex-direction: row;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-
-section {
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
   min-width: 300px;
   max-width: 500px;
   border: 2px solid;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-h2 {
-  padding: 1%;
-}
-
-ul {
-  padding-inline-start: 0;
+section.content > * {
+  padding: 2%;
 }
 
 li.blog-entry {
@@ -25,16 +18,15 @@ li.blog-entry {
   justify-content: space-between;
 }
 
-li.blog-entry p {
-  padding: 1%;
-}
-
-p.title {
+li.blog-entry p.title {
   width: 60%;
 }
 
-p.date {
+li.blog-entry p.date {
   width: 40%;
-  color: gray;
   text-align: right;
+}
+
+p.date {
+  color: gray;
 }

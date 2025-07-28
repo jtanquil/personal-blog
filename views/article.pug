@@ -1,0 +1,14 @@
+extends main.pug
+
+block title
+  title=`${locals.title}`
+
+block content
+  h1=`${locals.title}`
+
+  p(class="date")=`${locals.date}`
+
+  p=`${locals.content}`
+
+  p
+    a(href="/home")="Home"
