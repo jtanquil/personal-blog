@@ -1,6 +1,6 @@
 main {
   display: flex;
-  flex-direction: column;
+  flex-flow: column;
   margin-left: auto;
   margin-right: auto;
   min-width: 300px;
@@ -11,6 +11,18 @@ main {
 
 section.content > * {
   padding: 2%;
+}
+
+h1.admin-title {
+  width: 75%;
+}
+
+p.admin-new {
+  width: 25%;
+}
+
+ul {
+  width: 100%;
 }
 
 li.blog-entry {
@@ -27,6 +39,34 @@ li.blog-entry p.date {
   text-align: right;
 }
 
-p.date {
+p.date, p.edit a, .delete input {
   color: gray;
+}
+
+p.edit {
+  text-align: right;
+  width: 20%;
+}
+
+p.edit a {
+  text-decoration: none;
+}
+
+.delete input[type="submit"] {
+  background: none;
+  border: none; 
+  padding: 0;
+  margin: 0;
+  text-align: right;
+  cursor: pointer;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form * {
+  margin-top: 1%;
+  margin-bottom: 1%;
 }

@@ -1,0 +1,32 @@
+extends main.pug
+
+block title
+  title=`${(locals.route === "/new") ? "New Article" : "Edit Article"}`
+
+block content
+  h1=`${(locals.route === "/new") ? "New Article" : "Edit Article"}`
+
+  form(method="post" action=`${locals.route}`)
+    input(
+      name="title"
+      value=`${("title" in locals) ? locals.title : ""}`
+      placeholder="Article Title"
+    )
+    input(
+      name="date"
+      value=`${("date" in locals) ? locals.date : ""}`
+      placeholder="Publishing Date"
+    )
+    textarea(
+      name="content"
+      rows="10"
+      placeholder="Content"
+    )=`${("content" in locals) ? locals.content : ""}`
+    input(
+      type="submit"
+      value=`${(locals.route === "/new") ? "Publish" : "Update"}`
+    )
+
+block footer
+  p
+    a(href="/home")="Home"

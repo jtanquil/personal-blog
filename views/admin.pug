@@ -1,0 +1,21 @@
+extends main.pug 
+
+block title
+  title="Personal Blog - Home"
+
+block content
+  h1(class="admin-title")="Personal Blog"
+
+  //- p(class="admin-new")
+  a(href="/new")="+New"
+
+  ul
+  - for (let blogEntry of locals.blogEntries) {
+    li(class="blog-entry")
+      p(class="title")
+        a(href=`/article/${blogEntry.id}`)=`${blogEntry.title}`
+      p(class="edit")
+        a(href=`/edit/${blogEntry.id}`)="Edit"
+      form(method="post" action=`/delete/${blogEntry.id}` class="delete")
+        input(type="submit" value="Delete")
+  - }

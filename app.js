@@ -3,13 +3,15 @@
 const express = require("express");
 const app = express();
 
-const { getBlogEntryList, getBlogEntry } = require('./article.js');
+const { getBlogEntryList, getBlogEntry, addBlogEntry, updateBlogEntry, deleteBlogEntry } = require('./article.js');
+const auth = require('./auth.js');
 
 const PORT = 3000;
 
 app.set("view engine", "pug");
 
 app.use("/public", express.static("public"));
+app.use(express.urlencoded({ extended: true}));
 
 app.get("/", (req, res) => {
   res.redirect("/home");
@@ -27,18 +29,42 @@ app.get("/article/:id", (req, res) => {
   });
 });
 
+app.use("/admin", auth);
+app.use("/edit/:id", auth);
+app.use("/new", auth);
+app.use("/delete/:id", auth);
+
 app.get("/admin", (req, res) => {
-  res.send("admin");
+  res.render("admin", {
+    blogEntries: getBlogEntryList(),
+  });
 });
 
 app.route("/edit/:id")
   .get((req, res) => {
-    res.send(`edit article id: ${req.params.id}`);
-  });
+    res.render("edit-article", {
+      route: `/edit/${req.params.id}`,
+      ...getBlogEntry(req.params.id),
+    });
+  }).post((req, res) => {
+    updateBlogEntry(req.params.id, req.body.title, req.body.date, req.body.content);
+    res.redirect(`/article/${req.params.id}`);
+  })
 
 app.route("/new")
   .get((req, res) => {
-    res.send("new");
+    res.render("edit-article", {
+      route: "/new",
+    });
+  }).post((req, res) => {
+    const newArticleId = addBlogEntry(req.body.title, req.body.content);
+    res.redirect(`/article/${newArticleId}`);
+  });
+
+app.route("/delete/:id")
+  .post((req, res) => {
+    deleteBlogEntry(req.params.id);
+    res.redirect("/admin");
   });
 
 app.listen(PORT, () => {

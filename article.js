@@ -48,4 +48,59 @@ function getBlogEntry(id) {
   }, id);
 }
 
-module.exports = { getBlogEntryList, getBlogEntry };
+function addBlogEntry(title, content) {
+  return accessEntries((title, content) => {
+    const blogEntries = JSON.parse(fs.readFileSync(FILENAME));
+    const id = blogEntries.currentId;
+    
+    blogEntries.blogEntries.push({
+      id,
+      date: new Date().toLocaleDateString("en-us", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }),
+      title,
+      content,
+    });
+    blogEntries.currentId += 1;
+
+    fs.writeFileSync(FILENAME, JSON.stringify(blogEntries));
+    return id;
+  }, title, content);
+}
+
+function updateBlogEntry(id, title, date, content) {
+  return accessEntries((id, title, date, content) => {
+    const blogEntries = JSON.parse(fs.readFileSync(FILENAME));
+    const blogEntry = blogEntries.blogEntries.find((entry => entry.id === Number(id)));
+
+    if (!blogEntry) {
+      throw new Error(`could not find blog entry with id ${id}`);
+    } else {
+      blogEntry.title = title;
+      blogEntry.date = date;
+      blogEntry.content = content;
+    }
+
+    fs.writeFileSync(FILENAME, JSON.stringify(blogEntries));
+    return id;
+  }, id, title, date, content);
+}
+
+function deleteBlogEntry(id) {
+  return accessEntries((id) => {
+    const blogEntries = JSON.parse(fs.readFileSync(FILENAME));
+    const blogEntry = blogEntries.blogEntries.find((entry => entry.id === Number(id)));
+
+    if (!blogEntry) {
+      throw new Error(`could not find any blog entry with id ${id}`);
+    } else {
+      blogEntries.blogEntries = blogEntries.blogEntries.filter(entry => entry !== blogEntry);
+    }
+
+    fs.writeFileSync(FILENAME, JSON.stringify(blogEntries));
+  }, id);
+}
+
+module.exports = { getBlogEntryList, getBlogEntry, addBlogEntry, updateBlogEntry, deleteBlogEntry };
