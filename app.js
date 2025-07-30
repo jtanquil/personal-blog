@@ -3,7 +3,12 @@
 const express = require("express");
 const app = express();
 
-const { getBlogEntryList, getBlogEntry, addBlogEntry, updateBlogEntry, deleteBlogEntry } = require('./article.js');
+const { 
+  getBlogEntryList, 
+  getBlogEntry, 
+  addBlogEntry, 
+  updateBlogEntry, 
+  deleteBlogEntry } = require('./article.js');
 const auth = require('./auth.js');
 
 const PORT = 3000;
@@ -11,7 +16,7 @@ const PORT = 3000;
 app.set("view engine", "pug");
 
 app.use("/public", express.static("public"));
-app.use(express.urlencoded({ extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   res.redirect("/home");
@@ -19,7 +24,7 @@ app.get("/", (req, res) => {
 
 app.get("/home", (req, res) => {
   res.render("home", {
-    blogEntries: getBlogEntryList(),
+    entries: getBlogEntryList(),
   });
 });
 
@@ -29,14 +34,11 @@ app.get("/article/:id", (req, res) => {
   });
 });
 
-app.use("/admin", auth);
-app.use("/edit/:id", auth);
-app.use("/new", auth);
-app.use("/delete/:id", auth);
+app.use(["/admin", "/edit/:id", "/new", "/delete/:id"], auth);
 
 app.get("/admin", (req, res) => {
   res.render("admin", {
-    blogEntries: getBlogEntryList(),
+    entries: getBlogEntryList(),
   });
 });
 
@@ -46,7 +48,8 @@ app.route("/edit/:id")
       route: `/edit/${req.params.id}`,
       ...getBlogEntry(req.params.id),
     });
-  }).post((req, res) => {
+  })
+  .post((req, res) => {
     updateBlogEntry(req.params.id, req.body.title, req.body.date, req.body.content);
     res.redirect(`/article/${req.params.id}`);
   })
@@ -56,7 +59,8 @@ app.route("/new")
     res.render("edit-article", {
       route: "/new",
     });
-  }).post((req, res) => {
+  })
+  .post((req, res) => {
     const newArticleId = addBlogEntry(req.body.title, req.body.content);
     res.redirect(`/article/${newArticleId}`);
   });

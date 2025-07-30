@@ -7,7 +7,7 @@ block content
     h1="Personal Blog"
 
     ul
-    - for (let blogEntry of locals.blogEntries) {
+    - for (let blogEntry of locals.entries) {
       li(class="blog-entry")
         p(class="title")
           a(href=`/article/${blogEntry.id}`)=`${blogEntry.title}`

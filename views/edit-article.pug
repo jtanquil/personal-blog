@@ -14,8 +14,9 @@ block content
     )
     input(
       name="date"
-      value=`${("date" in locals) ? locals.date : ""}`
+      value=`${("date" in locals) ? locals.date : new Date().toLocaleDateString('en-us', { year: "numeric", day: "numeric", month: "long"})}`
       placeholder="Publishing Date"
+      readonly
     )
     textarea(
       name="content"

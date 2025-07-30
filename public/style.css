@@ -13,12 +13,26 @@ section.content > * {
   padding: 2%;
 }
 
-h1.admin-title {
+section.header {
+  display: flex;
+  flex-flow: row;
+}
+
+h1.title {
   width: 75%;
+  font-size: 1.5em;
 }
 
 p.admin-new {
+  margin-top: auto;
+  margin-bottom: auto;
   width: 25%;
+  text-align: right;
+}
+
+p.admin-new a {
+  font-weight: bold;
+  text-decoration: none;
 }
 
 ul {
@@ -39,7 +53,7 @@ li.blog-entry p.date {
   text-align: right;
 }
 
-p.date, p.edit a, .delete input {
+p.date, p.edit a, .delete input, p.admin-new a {
   color: gray;
 }
 
